@@ -1,0 +1,83 @@
+<!doctype html>
+
+<html lang="fi">
+
+<head>
+  
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="index.css">
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <title>Arduino projekti</title>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="container">
+			<div class="jumbotron text-center boksi">
+			<div class="row">
+				<div class="col-sm-12">
+					<h1>Arduino projekti</h1>
+					<hr>
+				</div>
+	
+				<div class="col-sm-4 col-sm-offset-4">
+					<div class="jumbotron text-left arvo">
+						<p>Arvo:<p>
+						<div id="lista" class="panel panel-default">
+							<p></p>
+						</div>
+						<br>
+						<div class="text-center">
+							<button type="button" id="target" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span></button>
+							<button type="button" id="target2" class="btn btn-danger"><span class="glyphicon glyphicon-minus"></span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
+	</div>
+<script>
+$("#target").click(function(){
+ 
+ $.ajax({
+      type:'post',
+      url:'/cgi-bin/ledSyttyy.py',
+      cache:false,
+      async:'asynchronous',
+	  success: function(data) {
+		$.getJSON("valo.json", function(result){
+			$.each(result, function(index, value){
+            $("#lista").text(value.valo);
+			});
+		});
+	  }
+	});
+});
+
+	$("#target2").click(function(){
+ 
+ $.ajax({
+      type:'post',
+      url:'/cgi-bin/ledSammuu.py',
+      cache:false,
+      async:'asynchronous',
+	  success: function(data) {
+		$.getJSON("valo.json", function(result){
+			$.each(result, function(index, value){
+            $("#lista").text(value.valo);
+			});
+		});
+	  }
+   });
+});
+
+
+</script>
+</body>
+
+</html>
